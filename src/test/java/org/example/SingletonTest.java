@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class SingletonTest {
 
     @Test
@@ -11,6 +12,6 @@ class SingletonTest {
         Object object1 = Singleton.getInstance();
         Object object2 = Singleton.getInstance();
 
-        Assert.assertTrue(object1.equals(object2));
+        Assert.assertEquals(object1, object2);
     }
 }

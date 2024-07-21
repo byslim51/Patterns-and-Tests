@@ -13,5 +13,6 @@ class SingletonTest {
         Object object2 = Singleton.getInstance();
 
         Assert.assertEquals(object1, object2);
+        Assert.assertTrue(object1 == object2);
     }
 }

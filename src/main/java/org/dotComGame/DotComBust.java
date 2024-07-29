@@ -39,6 +39,10 @@ public class DotComBust {
         System.out.println();
     }
 
+    public void setDotComsList (DotCom arrayList) {
+        dotComsList.add(arrayList);
+    }
+
     /**
      * Добавление доступных ходов пользователя в ArrayList validMoves
      */
@@ -48,6 +52,10 @@ public class DotComBust {
                 validMoves.add("" + helper.getAlphabet().charAt(i) + j);
             }
         }
+    }
+
+    public String testCheckUserGuess(String testUserGuess) {
+        return checkUserGuess(testUserGuess);
     }
 
     private void setUpGame() {
@@ -93,15 +101,15 @@ public class DotComBust {
         finishGame(); // Вызываем метод finishGame
     }
 
-    private void checkUserGuess(String userGuess) {
+    private String checkUserGuess(String userGuess) {
 
         if (!validMoves.contains(userGuess)) {
             System.out.println("Вы ввели что то неправильное.");
-            return;
+            return "Вы ввели что то неправильное.";
         }
         if (moves.contains(userGuess)) {
             System.out.println("Вы уже указывали эту ячейку");
-            return;
+            return "Вы уже указывали эту ячейку";
         }
         moves.add(userGuess);
 
@@ -131,6 +139,7 @@ public class DotComBust {
         if (!result.equals("Потопил")) {
             System.out.println(result);
         }
+        return result;
     }
 
     private void finishGame() {

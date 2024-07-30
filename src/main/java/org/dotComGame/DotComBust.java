@@ -17,6 +17,12 @@ public class DotComBust {
     }
 
 
+    /**
+     * Нужен для тестов (геттер)
+     */
+    public int getNumOfGuesses() {
+        return numOfGuesses;
+    }
 
     /**
      * Очистка консоли и изменение таблицы ходов
@@ -52,10 +58,6 @@ public class DotComBust {
                 validMoves.add("" + helper.getAlphabet().charAt(i) + j);
             }
         }
-    }
-
-    public String testCheckUserGuess(String testUserGuess) {
-        return checkUserGuess(testUserGuess);
     }
 
     private void setUpGame() {
@@ -101,7 +103,7 @@ public class DotComBust {
         finishGame(); // Вызываем метод finishGame
     }
 
-    private String checkUserGuess(String userGuess) {
+    public String checkUserGuess(String userGuess) {
 
         if (!validMoves.contains(userGuess)) {
             System.out.println("Вы ввели что то неправильное.");

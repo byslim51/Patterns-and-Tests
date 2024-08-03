@@ -38,8 +38,8 @@ public class DotCom {
         name = n;
     }
 
-    public String checkYourself(String userInput) {
-        String result = "Мимо";
+    public GameStatus checkYourself(String userInput) {
+        GameStatus gameStatus = GameStatus.MISS;
 
         int index = locationCells.indexOf(userInput);
 
@@ -47,11 +47,11 @@ public class DotCom {
             locationCells.remove(index);
 
             if (locationCells.isEmpty()) {
-                result = "Потопил";
+                gameStatus = GameStatus.KILL;
             } else {
-                result = "Попал";
+                gameStatus = GameStatus.HIT;
             }
         }
-        return result;
+        return gameStatus;
     }
 }

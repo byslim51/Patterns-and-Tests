@@ -17,8 +17,8 @@ class DotComTest {
         locationCells.add("a2");
         locationCells.add("a3");
         dotCom.setLocationSells(locationCells);
-        String actual = dotCom.checkYourself("a1");
-        String expected = "Попал";
+        GameStatus actual = dotCom.checkYourself("a1");
+        GameStatus expected = GameStatus.HIT;
         assertEquals(expected, actual);
     }
 
@@ -30,8 +30,8 @@ class DotComTest {
         locationCells.add("a2");
         locationCells.add("a3");
         dotCom.setLocationSells(locationCells);
-        String actual = dotCom.checkYourself("a4");
-        String expected = "Мимо";
+        GameStatus actual = dotCom.checkYourself("a4");
+        GameStatus expected = GameStatus.MISS;
         assertEquals(expected, actual);
     }
 
@@ -44,21 +44,22 @@ class DotComTest {
         locationCells.add("a3");
         dotCom.setLocationSells(locationCells);
 
-        String actualHit1 = dotCom.checkYourself("a1");
-        assertEquals("Попал", actualHit1);
+        GameStatus actualHit1 = dotCom.checkYourself("a1");
+        assertEquals(GameStatus.HIT, actualHit1);
         assertEquals(2, dotCom.getLocationCells().size());
         assertFalse(dotCom.getLocationCells().contains("a1"));
 
-        String actualHit2 = dotCom.checkYourself("a2");
-        assertEquals("Попал", actualHit2);
+        GameStatus actualHit2 = dotCom.checkYourself("a2");
+        assertEquals(GameStatus.HIT, actualHit2);
         assertEquals(1, dotCom.getLocationCells().size());
         assertFalse(dotCom.getLocationCells().contains("a2"));
 
-        String actualHit3 = dotCom.checkYourself("a3");
-        assertEquals("Потопил", actualHit3);
+        GameStatus actualHit3 = dotCom.checkYourself("a3");
+        assertEquals(GameStatus.KILL, actualHit3);
         assertEquals(0, dotCom.getLocationCells().size());
         assertFalse(dotCom.getLocationCells().contains("a3"));
     }
+
 
 
 

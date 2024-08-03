@@ -9,9 +9,9 @@ public class DotComBust {
     private final ArrayList<DotCom> dotComsList = new ArrayList<>();
     private int numOfGuesses = 0;
     private final List<String> moves = new ArrayList<>();
-    String result = "Мимо"; // Подразумеваем промах, пока не изменился результат
     List<String> validMoves = new ArrayList<>();
     List<String> pastMoves = new ArrayList<>();
+
     {
         fillValidMoves();
     }
@@ -45,7 +45,7 @@ public class DotComBust {
         System.out.println();
     }
 
-    public void setDotComsList (DotCom arrayList) {
+    public void setDotComsList(DotCom arrayList) {
         dotComsList.add(arrayList);
     }
 
@@ -98,50 +98,40 @@ public class DotComBust {
             String userGuess = helper.getUserInput("Сделайте ход:"); // Получаем пользовательский ввод
             pastMoves.add(userGuess);
             clearConsoleAndTableChange();
-            checkUserGuess(userGuess); // Вызываем наш метод checkUserGuess
+            System.out.println(checkUserGuess(userGuess)); // Вызываем наш метод checkUserGuess
         }
         finishGame(); // Вызываем метод finishGame
     }
 
-    public String checkUserGuess(String userGuess) {
+    public GameStatus checkUserGuess(String userGuess) {
 
         if (!validMoves.contains(userGuess)) {
-            System.out.println("Вы ввели что то неправильное.");
-            return "Вы ввели что то неправильное.";
+            return GameStatus.UNCORRECT;
         }
         if (moves.contains(userGuess)) {
-            System.out.println("Вы уже указывали эту ячейку");
-            return "Вы уже указывали эту ячейку";
+            return GameStatus.WAS;
         }
         moves.add(userGuess);
 
         numOfGuesses++; // Инкрементируем количество попыток которые сделал пользователь
 
+        GameStatus gameStatus = GameStatus.MISS;
         for (DotCom dotComToTest : dotComsList) { // Повторяем это для всех объектов dotCom в списке
-            result = dotComToTest.checkYourself(userGuess); // Просим DotCom проверить ход пользователя
+            gameStatus = dotComToTest.checkYourself(userGuess); // Просим DotCom проверить ход пользователя
 
-            if (result.equals("Попал")) {
+            if (gameStatus == GameStatus.HIT) {
                 break; // Преднамеренно заканчиваем цикл
             }
-            if (result.equals("Потопил")) {
-                System.out.println("Ой! Вы потопили " + dotComToTest);
+            if (gameStatus == GameStatus.KILL) {
                 dotComsList.remove(dotComToTest); // Удаляем из списка потопленный сайт
-                break;
+                return GameStatus.KILL;
             }
-            if (result.equals("Вы уже указывали эту ячейку")) {
+            if (gameStatus == GameStatus.WAS) {
                 numOfGuesses--;
                 break;
             }
-//            if (result.equals("Вы ввели что то неправильное.")) {
-//                numOfGuesses--;
-//                break;
-//            }
-
         }
-        if (!result.equals("Потопил")) {
-            System.out.println(result);
-        }
-        return result;
+        return gameStatus;
     }
 
     private void finishGame() {
